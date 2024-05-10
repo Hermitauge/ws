@@ -87,7 +87,6 @@ const Shipping: React.FC<ShippingProps> = ({
               <button
                 onClick={handleEdit}
                 className="text-ui-fg-interactive hover:text-ui-fg-interactive-hover"
-                data-testid="edit-delivery-button"
               >
                 Edit
               </button>
@@ -95,7 +94,7 @@ const Shipping: React.FC<ShippingProps> = ({
           )}
       </div>
       {isOpen ? (
-        <div data-testid="delivery-options-container">
+        <div>
           <div className="pb-8">
             <RadioGroup
               value={cart.shipping_methods[0]?.shipping_option_id}
@@ -107,7 +106,6 @@ const Shipping: React.FC<ShippingProps> = ({
                     <RadioGroup.Option
                       key={option.id}
                       value={option.id}
-                      data-testid="delivery-option-radio"
                       className={clx(
                         "flex items-center justify-between text-small-regular cursor-pointer py-4 border rounded-rounded px-8 mb-2 hover:shadow-borders-interactive-with-active",
                         {
@@ -144,10 +142,7 @@ const Shipping: React.FC<ShippingProps> = ({
             </RadioGroup>
           </div>
 
-          <ErrorMessage
-            error={error}
-            data-testid="delivery-option-error-message"
-          />
+          <ErrorMessage error={error} />
 
           <Button
             size="large"
@@ -155,7 +150,6 @@ const Shipping: React.FC<ShippingProps> = ({
             onClick={handleSubmit}
             isLoading={isLoading}
             disabled={!cart.shipping_methods[0]}
-            data-testid="submit-delivery-option-button"
           >
             Continue to payment
           </Button>

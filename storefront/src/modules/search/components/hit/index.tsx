@@ -21,10 +21,7 @@ type HitProps = {
 
 const Hit = ({ hit }: HitProps) => {
   return (
-    <LocalizedClientLink
-      href={`/products/${hit.handle}`}
-      data-testid="search-result"
-    >
+    <LocalizedClientLink href={`/products/${hit.handle}`}>
       <Container
         key={hit.id}
         className="flex sm:flex-col gap-2 w-full p-4 shadow-elevation-card-rest hover:shadow-elevation-card-hover items-center sm:justify-center"
@@ -36,12 +33,7 @@ const Hit = ({ hit }: HitProps) => {
         />
         <div className="flex flex-col justify-between group">
           <div className="flex flex-col">
-            <Text
-              className="text-ui-fg-subtle"
-              data-testid="search-result-title"
-            >
-              {hit.title}
-            </Text>
+            <Text className="text-ui-fg-subtle">{hit.title}</Text>
           </div>
         </div>
       </Container>

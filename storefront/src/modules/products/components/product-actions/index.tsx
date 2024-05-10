@@ -18,7 +18,6 @@ import ProductPrice from "../product-price"
 type ProductActionsProps = {
   product: PricedProduct
   region: Region
-  disabled?: boolean
 }
 
 export type PriceType = {
@@ -31,7 +30,6 @@ export type PriceType = {
 export default function ProductActions({
   product,
   region,
-  disabled,
 }: ProductActionsProps) {
   const [options, setOptions] = useState<Record<string, string>>({})
   const [isAdding, setIsAdding] = useState(false)
@@ -97,23 +95,13 @@ export default function ProductActions({
 
   // check if the selected variant is in stock
   const inStock = useMemo(() => {
-    // If we don't manage inventory, we can always add to cart
-    if (variant && !variant.manage_inventory) {
-      return true
+    if (variant && !variant.inventory_quantity) {
+      return false
     }
 
-    // If we allow back orders on the variant, we can add to cart
-    if (variant && variant.allow_backorder) {
+    if (variant && variant.allow_backorder === false) {
       return true
     }
-
-    // If there is inventory available, we can add to cart
-    if (variant?.inventory_quantity && variant.inventory_quantity > 0) {
-      return true
-    }
-
-    // Otherwise, we can't add to cart
-    return false
   }, [variant])
 
   const actionsRef = useRef<HTMLDivElement>(null)
@@ -149,8 +137,6 @@ export default function ProductActions({
                       current={options[option.id]}
                       updateOption={updateOptions}
                       title={option.title}
-                      data-testid="product-options"
-                      disabled={!!disabled || isAdding}
                     />
                   </div>
                 )
@@ -164,11 +150,10 @@ export default function ProductActions({
 
         <Button
           onClick={handleAddToCart}
-          disabled={!inStock || !variant || !!disabled || isAdding}
+          disabled={!inStock || !variant}
           variant="primary"
           className="w-full h-10"
           isLoading={isAdding}
-          data-testid="add-product-button"
         >
           {!variant
             ? "Select variant"
@@ -186,7 +171,6 @@ export default function ProductActions({
           handleAddToCart={handleAddToCart}
           isAdding={isAdding}
           show={!inView}
-          optionsDisabled={!!disabled || isAdding}
         />
       </div>
     </>
