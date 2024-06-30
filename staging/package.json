@@ -4,6 +4,9 @@
   "description": "William & Sons Jewelers Staging",
   "author": "M3hnz",
   "license": "MIT",
+  "engines": {
+    "node": "20"
+  },
   "scripts": {
     "clean": "cross-env ./node_modules/.bin/rimraf dist",
     "build": "cross-env npm run clean && npm run build:server && npm run build:admin",
@@ -37,7 +40,7 @@
     "medusa-interfaces": "latest",
     "medusa-payment-manual": "latest",
     "medusa-payment-stripe": "latest",
-    "medusa-plugin-algolia-search": "^0.3.0",
+    "medusa-plugin-algolia-search": "0.1.1",
     "medusa-plugin-filestorage-local": "^0.1.2",
     "prism-react-renderer": "^2.0.4",
     "typeorm": "^0.3.16"
