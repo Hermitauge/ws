@@ -89,36 +89,7 @@ const plugins = [
       cache_control: process.env.S3_CACHE_CONTROL,
     },
   },
-  // Search 
-  {
-    resolve: `medusa-plugin-algolia-search`,
-    options: {
-      applicationId: process.env.ALGOLIA_APP_ID,
-      adminApiKey: process.env.ALGOLIA_ADMIN_API_KEY,
-      settings: {
-        products: {
-          indexSettings: {
-            indexName: 'products',
-            searchableAttributes: ["title", "description"],
-            attributesToRetrieve: ["id", "title", "description", "handle", "thumbnail", "images", "variants", "variant_sku", "options", "collection_title", "collection_handle", "metadata", "tags"],
-          },
-          filter: (product) => product.status == "published",
-          transformer: (product) => ({
-            objectID: product.id,
-            id: product.id,
-            title: product.title,
-            handle: product.handle,
-            thumbnail: product.thumbnail,
-            collection_title: product.collection && product.collection.title ? product.collection.title : null,
-            metadata: product.metadata,
-            tags: product.tags,
-            images: product.images,
-            // other attributes...
-          }),
-        },
-      },
-    },
-  },
+
   // Notifications
 ];
 
