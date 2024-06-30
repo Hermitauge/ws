@@ -65,6 +65,67 @@ const ADMIN_APP_PORT = process.env.PORT || 7001;
         },
       },
     },
+
+  // Payment
+
+  {
+    resolve: `medusa-payment-stripe`,
+    options: {
+      api_key: process.env.STRIPE_API_KEY,
+      webhook_secret: process.env.STRIPE_WEBHOOK_SECRET,
+    },
+  },
+
+  // Storage
+
+  {
+    resolve: `medusa-file-s3`,
+    options: {
+      s3_url: process.env.S3_URL,
+      bucket: process.env.S3_BUCKET,
+      prefix: process.env.S3_PREFIX,
+      region: process.env.S3_REGION,
+      download_file_duration: process.env.S3_DOWNLOAD_FILE_DURATION,
+      secret_access_key: process.env.S3_SECRET_ACCESS_KEY,
+      access_key_id: process.env.S3_ACCESS_KEY_ID,
+      cache_control: process.env.S3_CACHE_CONTROL,
+    },
+  },
+
+  // Search 
+
+  {
+    resolve: `medusa-plugin-algolia-search`,
+    options: {
+      applicationId: process.env.ALGOLIA_APP_ID,
+      adminApiKey: process.env.ALGOLIA_ADMIN_API_KEY,
+      settings: {
+        products: {
+          indexSettings: {
+            indexName: 'products',
+            searchableAttributes: ["title", "description"],
+            attributesToRetrieve: ["id", "title", "description", "handle", "thumbnail", "images", "variants", "variant_sku", "options", "collection_title", "collection_handle", "metadata", "tags"],
+          },
+          filter: (product) => product.status == "published",
+          transformer: (product) => ({
+            objectID: product.id,
+            id: product.id,
+            title: product.title,
+            handle: product.handle,
+            thumbnail: product.thumbnail,
+            collection_title: product.collection && product.collection.title ? product.collection.title : null,
+            metadata: product.metadata,
+            tags: product.tags,
+            images: product.images,
+            // other attributes...
+          }),
+        },
+      },
+    },
+  },
+
+  // Notifications
+
 ];
 
 const modules = {
@@ -98,5 +159,25 @@ const projectConfig = {
 module.exports = {
   projectConfig,
   plugins,
-  modules,
+  modules: {
+    inventoryService: {
+      resolve: "@medusajs/inventory",
+    },
+    stockLocationService: {
+      resolve: "@medusajs/stock-location",
+    },
+    eventBus: {
+      resolve: "@medusajs/event-bus-redis",
+      options: {
+        redisUrl: process.env.EVENTS_REDIS_URL,
+      },
+    },
+    cacheService: {
+      resolve: "@medusajs/cache-redis",
+      options: {
+        redisUrl: process.env.CACHE_REDIS_URL,
+        ttl: 30,
+      },
+    },
+  },
 };

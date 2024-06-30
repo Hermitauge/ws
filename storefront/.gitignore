@@ -3,6 +3,7 @@
 # IDEs
 .idea
 .vscode
+.DS_Store
 
 # dependencies
 /node_modules
