@@ -15,9 +15,11 @@ switch (process.env.NODE_ENV) {
   default:
     ENV_FILE_NAME = ".env";
     break;
-  } try {
+}
+
+try {
   dotenv.config({ path: process.cwd() + "/" + ENV_FILE_NAME });
-  } catch (e) { }
+} catch (e) { }
 
 // CORS when consuming Medusa from admin
 const ADMIN_CORS = process.env.ADMIN_CORS || "http://localhost:7000,http://localhost:7001";
@@ -44,30 +46,28 @@ const RESEND_USER_INVITE = process.env.RESEND_USER_INVITE;
 
 const ADMIN_APP_PORT = process.env.PORT || 7001;
 
-  const plugins = [
-    `medusa-fulfillment-manual`,
-    `medusa-payment-manual`,
-    {
-      resolve: `@medusajs/file-local`,
-      options: {
-        upload_dir: "uploads",
+const plugins = [
+  `medusa-fulfillment-manual`,
+  `medusa-payment-manual`,
+  {
+    resolve: `@medusajs/file-local`,
+    options: {
+      upload_dir: "uploads",
+    },
+  },
+  {
+    resolve: "@medusajs/admin",
+    /** @type {import('@medusajs/admin').PluginOptions} */
+    options: {
+      autoRebuild: true,
+      path: "/",
+      develop: {
+        open: process.env.OPEN_BROWSER !== "false",
+        port: ADMIN_APP_PORT,
       },
     },
-    {
-      resolve: "@medusajs/admin",
-      /** @type {import('@medusajs/admin').PluginOptions} */
-      options: {
-        autoRebuild: true,
-        path: "/",
-        develop: {
-          open: process.env.OPEN_BROWSER !== "false",
-          port: ADMIN_APP_PORT,
-        },
-      },
-    },
-
+  },
   // Payment
-
   {
     resolve: `medusa-payment-stripe`,
     options: {
@@ -75,9 +75,7 @@ const ADMIN_APP_PORT = process.env.PORT || 7001;
       webhook_secret: process.env.STRIPE_WEBHOOK_SECRET,
     },
   },
-
   // Storage
-
   {
     resolve: `medusa-file-s3`,
     options: {
@@ -91,9 +89,7 @@ const ADMIN_APP_PORT = process.env.PORT || 7001;
       cache_control: process.env.S3_CACHE_CONTROL,
     },
   },
-
   // Search 
-
   {
     resolve: `medusa-plugin-algolia-search`,
     options: {
@@ -123,9 +119,7 @@ const ADMIN_APP_PORT = process.env.PORT || 7001;
       },
     },
   },
-
   // Notifications
-
 ];
 
 const modules = {
