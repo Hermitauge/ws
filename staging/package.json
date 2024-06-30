@@ -4,9 +4,6 @@
   "description": "William & Sons Jewelers Staging",
   "author": "M3hnz",
   "license": "MIT",
-  "engines": {
-    "node": "20"
-  },
   "scripts": {
     "clean": "cross-env ./node_modules/.bin/rimraf dist",
     "build": "cross-env npm run clean && npm run build:server && npm run build:admin",
