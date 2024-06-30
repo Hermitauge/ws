@@ -1,10 +1,7 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "es5", "es6"],
-    "target": "esnext",
+    "target": "es2019",
     "allowJs": true,
-    "checkJs": true,
-    "jsx": "react-jsx",
     "esModuleInterop": true,
     "module": "commonjs",
     "moduleResolution": "node",
@@ -14,18 +11,20 @@
     "skipDefaultLibCheck": true,
     "declaration": true,
     "sourceMap": false,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "jsx": "react-jsx",
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "checkJs": false
   },
   "include": ["src/"],
   "exclude": [
-    "build",
-    ".cache",
     "**/__tests__",
     "**/__fixtures__",
     "node_modules",
+    "build",
+    ".cache"
   ]
 }
