@@ -11,7 +11,7 @@ export function SubmitButton({
   'data-testid': dataTestId
 }: {
   children: React.ReactNode
-  variant?: "primary" | "secondary" | "transparent" | "danger" | undefined
+  variant?: "primary" | "secondary" | "transparent" | "danger" | null
   className?: string
   'data-testid'?: string
 }) {
